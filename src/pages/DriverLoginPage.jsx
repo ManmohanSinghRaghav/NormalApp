@@ -30,7 +30,7 @@ export default function DriverLoginPage() {
       const { data: driverData, error: driverError } = await supabase
         .from('drivers')
         .select('*')
-        .eq('email', email)
+        .eq('user_id', data.user.id)
         .single()
 
       if (driverError && driverError.code !== 'PGRST116') {

@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import DriverLoginPage from './pages/DriverLoginPage.jsx'
 import DriverSignupPage from './pages/DriverSignupPage.jsx'
+import DriverSignupPageDebug from './pages/DriverSignupPageDebug.jsx'
 import DriverApplicationPage from './pages/DriverApplicationPage.jsx'
 import DriverDashboard from './pages/DriverDashboard.jsx'
 import DriverPendingPage from './pages/DriverPendingPage.jsx'
@@ -67,6 +68,7 @@ function AppContent() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/driver/login" element={<DriverLoginPage />} />
             <Route path="/driver/signup" element={<DriverSignupPage />} />
+            <Route path="/driver/signup-debug" element={<DriverSignupPageDebug />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}

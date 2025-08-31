@@ -44,9 +44,33 @@ export default function DriverApplicationPage() {
       if (data) {
         setFormData({
           fullName: data.full_name || '',
-          phoneNumber: data.phone || '',
-          email: data.email || '',
+          phoneNumber: data.phone_number || '',
+          email: user.email || '', // Get email from auth user, not drivers table
           notes: data.notes || ''
+        })
+      } else {
+        // No driver profile exists, create one
+        const { error: createError } = await supabase
+          .from('drivers')
+          .insert([
+            {
+              user_id: user.id,
+              full_name: user.user_metadata?.full_name || '',
+              phone_number: '',
+              status: 'pending'
+            }
+          ])
+        
+        if (createError) {
+          console.error('Error creating initial driver profile:', createError)
+        }
+        
+        // Set form with user data
+        setFormData({
+          fullName: user.user_metadata?.full_name || '',
+          phoneNumber: '',
+          email: user.email || '',
+          notes: ''
         })
       }
     } catch (err) {
@@ -99,13 +123,12 @@ export default function DriverApplicationPage() {
         .from('drivers')
         .update({
           full_name: formData.fullName,
-          phone: formData.phoneNumber,
-          email: formData.email,
+          phone_number: formData.phoneNumber,
           notes: formData.notes,
           status: 'approved', // Auto-approve for demo purposes
           updated_at: new Date().toISOString()
         })
-        .eq('id', user.id)
+        .eq('user_id', user.id)
 
       if (updateError) {
         setError('Failed to save application')

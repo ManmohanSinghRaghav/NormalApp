@@ -59,25 +59,90 @@ export default function DriverSignupPage() {
       }
 
       if (data.user) {
-        // Create driver profile
-        const { error: driverError } = await supabase
-          .from('drivers')
-          .insert([
-            {
-              full_name: formData.fullName,
-              phone: formData.phoneNumber,
-              email: formData.email,
-              status: 'pending'
-            }
-          ])
-
-        if (driverError) {
-          console.error('Error creating driver profile:', driverError)
-          setError('Failed to create driver profile')
+        console.log('User created successfully:', data.user.id)
+        
+        // First, test if we can read from the drivers table
+        try {
+          const { data: testRead, error: readError } = await supabase
+            .from('drivers')
+            .select('id')
+            .limit(1)
+          
+          if (readError) {
+            console.error('Cannot read from drivers table:', readError)
+            setError(`Database access issue: ${readError.message}`)
+            setLoading(false)
+            return
+          }
+          
+          console.log('Drivers table is accessible for reading')
+        } catch (err) {
+          console.error('Drivers table read test failed:', err)
+          setError('Cannot access drivers table. Please check database setup.')
           setLoading(false)
           return
         }
 
+        // Create driver profile - try multiple column name variations
+        let driverError = null
+        let insertData = {
+          user_id: data.user.id,
+          full_name: formData.fullName,
+          status: 'pending'
+        }
+
+        // Try phone_number first
+        insertData.phone_number = formData.phoneNumber
+        let { error: error1 } = await supabase
+          .from('drivers')
+          .insert([insertData])
+
+        if (error1 && error1.message.includes('phone_number')) {
+          console.log('phone_number failed, trying phone...')
+          // Try with 'phone' instead
+          delete insertData.phone_number
+          insertData.phone = formData.phoneNumber
+          let { error: error2 } = await supabase
+            .from('drivers')
+            .insert([insertData])
+          driverError = error2
+        } else {
+          driverError = error1
+        }
+
+        if (driverError) {
+          console.error('Error creating driver profile:', driverError)
+          console.error('Error details:', {
+            message: driverError.message,
+            details: driverError.details,
+            hint: driverError.hint,
+            code: driverError.code,
+            statusCode: driverError.statusCode
+          })
+          console.error('Data being sent:', {
+            user_id: data.user.id,
+            full_name: formData.fullName,
+            phone_number: formData.phoneNumber,
+            status: 'pending'
+          })
+          
+          // Check if it's a table/column issue
+          if (driverError.message.includes('does not exist') || 
+              driverError.message.includes('schema cache') ||
+              driverError.message.includes('column')) {
+            setError('Database structure issue. Please run the complete rebuild script in Supabase.')
+          } else if (driverError.message.includes('permission') || 
+                     driverError.message.includes('policy') ||
+                     driverError.statusCode === 401) {
+            setError('Database permission issue. Check Row Level Security policies.')
+          } else {
+            setError(`Failed to create driver profile: ${driverError.message || 'Unknown error'}`)
+          }
+          setLoading(false)
+          return
+        }
+
+        console.log('Driver profile created successfully!')
         // Redirect to application form
         navigate('/driver/application')
       }
@@ -106,8 +171,8 @@ export default function DriverSignupPage() {
         maxWidth: 400
       }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <div style={{ fontSize: '32px', marginBottom: 8 }}>🚌</div>
-          <h2 style={{ margin: 0, color: '#333' }}>Become a Driver</h2>
+          {/* <div style={{ fontSize: '32px', marginBottom: 8 }}>🚌</div */}
+          <h2 style={{ fontSize: '32px', marginBottom: 8, color: '#333' }}>Become a Driver</h2>
           <p style={{ margin: '8px 0 0 0', color: '#666' }}>
             Join our network of professional drivers
           </p>
