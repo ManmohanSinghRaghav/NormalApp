@@ -58,8 +58,17 @@ export default function DriverSignupPage() {
         return
       }
 
+      console.log('Auth signup response:', data)
+
       if (data.user) {
         console.log('User created successfully:', data.user.id)
+        
+        // Wait a moment for the user to be fully created in the database
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        // Verify the user exists in auth.users
+        const { data: authUser, error: userCheckError } = await supabase.auth.getUser()
+        console.log('Auth user check:', authUser, userCheckError)
         
         // First, test if we can read from the drivers table
         try {
@@ -83,32 +92,18 @@ export default function DriverSignupPage() {
           return
         }
 
-        // Create driver profile - try multiple column name variations
-        let driverError = null
+        // Create driver profile with basic data first
         let insertData = {
           user_id: data.user.id,
           full_name: formData.fullName,
           status: 'pending'
         }
 
-        // Try phone_number first
-        insertData.phone_number = formData.phoneNumber
-        let { error: error1 } = await supabase
+        console.log('Inserting driver data:', insertData)
+
+        const { error: driverError } = await supabase
           .from('drivers')
           .insert([insertData])
-
-        if (error1 && error1.message.includes('phone_number')) {
-          console.log('phone_number failed, trying phone...')
-          // Try with 'phone' instead
-          delete insertData.phone_number
-          insertData.phone = formData.phoneNumber
-          let { error: error2 } = await supabase
-            .from('drivers')
-            .insert([insertData])
-          driverError = error2
-        } else {
-          driverError = error1
-        }
 
         if (driverError) {
           console.error('Error creating driver profile:', driverError)
@@ -126,8 +121,14 @@ export default function DriverSignupPage() {
             status: 'pending'
           })
           
-          // Check if it's a table/column issue
-          if (driverError.message.includes('does not exist') || 
+          // Check specific error types
+          if (driverError.message.includes('foreign key constraint') || 
+              driverError.message.includes('user_id_fkey')) {
+            setError('User creation timing issue. Please try logging in instead - your account may have been created.')
+            setTimeout(() => {
+              navigate('/driver/login')
+            }, 3000)
+          } else if (driverError.message.includes('does not exist') || 
               driverError.message.includes('schema cache') ||
               driverError.message.includes('column')) {
             setError('Database structure issue. Please run the complete rebuild script in Supabase.')
