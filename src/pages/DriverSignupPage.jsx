@@ -92,10 +92,11 @@ export default function DriverSignupPage() {
           return
         }
 
-        // Create driver profile with basic data first
+        // Create driver profile with all required data
         let insertData = {
           user_id: data.user.id,
           full_name: formData.fullName,
+          phone_number: formData.phoneNumber, // This is required (NOT NULL)
           status: 'pending'
         }
 
