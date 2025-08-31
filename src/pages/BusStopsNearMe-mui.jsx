@@ -64,9 +64,11 @@ const createStopIcon = (crowdLevel, amenities = {}) => {
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         position: relative;
         color: white;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
       ">
-        🚏
-        ${amenities.wheelchair ? '<div style="position: absolute; top: -2px; right: -2px; font-size: 8px;">♿</div>' : ''}
+        S
+        ${amenities.wheelchair ? '<div style="position: absolute; top: -2px; right: -2px; font-size: 8px; color: white;">A</div>' : ''}
       </div>
     `,
     className: 'custom-stop-marker',

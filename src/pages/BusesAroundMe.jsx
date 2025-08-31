@@ -68,8 +68,10 @@ const createBusIcon = (status, capacity) => {
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         position: relative;
         color: white;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
       ">
-        🚌
+        B
         <div style="
           position: absolute;
           bottom: -4px;

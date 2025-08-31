@@ -17,56 +17,56 @@ const languages = [
     code: 'en', 
     name: 'English', 
     nativeName: 'English',
-    flag: '🇺🇸',
+    flag: 'EN',
     direction: 'ltr'
   },
   { 
     code: 'hi', 
     name: 'Hindi', 
     nativeName: 'हिंदी',
-    flag: '🇮🇳',
+    flag: 'HI',
     direction: 'ltr'
   },
   { 
     code: 'bn', 
     name: 'Bengali', 
     nativeName: 'বাংলা',
-    flag: '🇧🇩',
+    flag: 'BN',
     direction: 'ltr'
   },
   { 
     code: 'ta', 
     name: 'Tamil', 
     nativeName: 'தமிழ்',
-    flag: '🇮🇳',
+    flag: 'TA',
     direction: 'ltr'
   },
   { 
     code: 'te', 
     name: 'Telugu', 
     nativeName: 'తెలుగు',
-    flag: '🇮🇳',
+    flag: 'TE',
     direction: 'ltr'
   },
   { 
     code: 'gu', 
     name: 'Gujarati', 
     nativeName: 'ગુજરાતી',
-    flag: '🇮🇳',
+    flag: 'GU',
     direction: 'ltr'
   },
   { 
     code: 'mr', 
     name: 'Marathi', 
     nativeName: 'मराठी',
-    flag: '🇮🇳',
+    flag: 'MR',
     direction: 'ltr'
   },
   { 
     code: 'pa', 
     name: 'Punjabi', 
     nativeName: 'ਪੰਜਾਬੀ',
-    flag: '🇮🇳',
+    flag: 'PA',
     direction: 'ltr'
   }
 ]
@@ -123,7 +123,7 @@ export default function LanguageSelector({ isOpen, onClose, isFullScreen = false
                     : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
               >
-                <div className="text-2xl mb-2">{language.flag}</div>
+                <div className="text-lg font-bold mb-2 text-primary-600">{language.flag}</div>
                 <div className="text-sm font-medium text-gray-900">{language.nativeName}</div>
                 <div className="text-xs text-gray-500">{language.name}</div>
               </button>
@@ -264,7 +264,7 @@ export function LanguageSwitcherMini() {
           color: 'inherit'
         }}
       >
-        <Typography component="span" sx={{ fontSize: '1.2rem' }}>
+        <Typography component="span" sx={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'primary.main' }}>
           {currentLanguage.flag}
         </Typography>
         <Typography 
@@ -294,7 +294,7 @@ export function LanguageSwitcherMini() {
             selected={i18n.language === language.code}
             sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
           >
-            <Typography component="span" sx={{ fontSize: '1.2rem' }}>
+            <Typography component="span" sx={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'primary.main' }}>
               {language.flag}
             </Typography>
             <Box sx={{ flexGrow: 1 }}>

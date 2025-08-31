@@ -4,9 +4,9 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#000000', // Black
-      light: '#333333',
-      dark: '#000000',
+      main: '#10b981',
+      light: '#4ade80',
+      dark: '#059669',
       contrastText: '#ffffff',
     },
     secondary: {
@@ -95,18 +95,18 @@ const theme = createTheme({
           padding: '8px 16px',
         },
         contained: {
-          backgroundColor: '#000000',
+          backgroundColor: '#10b981',
           color: '#ffffff',
           '&:hover': {
-            backgroundColor: '#333333',
+            backgroundColor: '#059669',
           },
         },
         outlined: {
-          borderColor: '#000000',
-          color: '#000000',
+          borderColor: '#10b981',
+          color: '#10b981',
           '&:hover': {
-            borderColor: '#333333',
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            borderColor: '#059669',
+            backgroundColor: 'rgba(16, 185, 129, 0.04)',
           },
         },
       },
@@ -166,10 +166,10 @@ const theme = createTheme({
     MuiFab: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000',
+          backgroundColor: '#10b981',
           color: '#ffffff',
           '&:hover': {
-            backgroundColor: '#333333',
+            backgroundColor: '#059669',
           },
         },
       },

@@ -4,7 +4,7 @@
   <img src="public/nextstop-banner.jpg" alt="NextStop Banner" width="700"/>
 
   **A comprehensive bus tracking solution for modern transit systems**  
-  [![Live Demo](https://img.shields.io/badge/Live_Demo-View_Now-Green?style=for-the-badge&logo=netlify)](https://nextstop-pb.netlify.app/)
+  [![Live Demo](https://img.shields.io/badge/Live_Demo-View_Now-Green?style=for-the-badge&logo=netlify)](https://nextat.netlify.app/)
   [![Documentation](https://img.shields.io/badge/Documentation-Complete-blue?style=for-the-badge)](./SETUP_INSTRUCTIONS.md)
 </div>
 

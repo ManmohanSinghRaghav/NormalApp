@@ -17,16 +17,12 @@ const unicodeToBase64 = (str) => {
   return btoa(unescape(encodeURIComponent(str)))
 }
 
-// Custom icons with SVG instead of emojis
+// Custom icons with simple text instead of emojis
 const busIcon = new L.Icon({
   iconUrl: 'data:image/svg+xml;base64,' + unicodeToBase64(`
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="16" r="15" fill="#4CAF50" stroke="#fff" stroke-width="2"/>
-      <rect x="8" y="10" width="16" height="12" rx="2" fill="white"/>
-      <rect x="10" y="12" width="4" height="3" fill="#4CAF50"/>
-      <rect x="18" y="12" width="4" height="3" fill="#4CAF50"/>
-      <circle cx="12" cy="20" r="1.5" fill="#4CAF50"/>
-      <circle cx="20" cy="20" r="1.5" fill="#4CAF50"/>
+      <circle cx="16" cy="16" r="15" fill="#10b981" stroke="#fff" stroke-width="2"/>
+      <text x="16" y="20" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">B</text>
     </svg>
   `),
   iconSize: [32, 32],
@@ -37,11 +33,8 @@ const busIcon = new L.Icon({
 const stopIcon = new L.Icon({
   iconUrl: 'data:image/svg+xml;base64,' + unicodeToBase64(`
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="11" fill="#2196F3" stroke="#fff" stroke-width="2"/>
-      <rect x="8" y="6" width="8" height="12" rx="1" fill="white"/>
-      <rect x="9" y="8" width="6" height="1" fill="#2196F3"/>
-      <rect x="9" y="10" width="6" height="1" fill="#2196F3"/>
-      <rect x="9" y="12" width="6" height="1" fill="#2196F3"/>
+      <circle cx="12" cy="12" r="11" fill="#10b981" stroke="#fff" stroke-width="2"/>
+      <text x="12" y="16" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">S</text>
     </svg>
   `),
   iconSize: [24, 24],
@@ -194,7 +187,7 @@ function Map() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
-        <div style={{ fontSize: '24px' }}>🗺️</div>
+        <div style={{ fontSize: '24px' }}>MAP</div>
         <h3 style={{ margin: '16px 0 8px', fontWeight: 'bold' }}>Finding nearby stops...</h3>
         <p style={{ color: '#666', textAlign: 'center' }}>
           We're locating bus stops around you. This may take a moment.
@@ -206,7 +199,7 @@ function Map() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
-        <div style={{ fontSize: '24px', color: '#f44336' }}>⚠️</div>
+        <div style={{ fontSize: '24px', color: '#f44336' }}>!</div>
         <h3 style={{ margin: '16px 0 8px', fontWeight: 'bold', color: '#f44336' }}>Error</h3>
         <p style={{ color: '#666', textAlign: 'center' }}>{error}</p>
         <button 
@@ -324,10 +317,10 @@ function Map() {
         zIndex: 1000
       }}>
         <div style={{ marginBottom: '4px' }}>
-          <span>🚏 {nearbyStops.length} stops nearby</span>
+          <span>S {nearbyStops.length} stops nearby</span>
         </div>
         <div>
-          <span>🚌 {buses.length} buses active</span>
+          <span>B {buses.length} buses active</span>
         </div>
       </div>
 
