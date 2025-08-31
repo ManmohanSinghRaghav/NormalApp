@@ -1,0 +1,192 @@
+/* Map and UI Layer Z-Index Hierarchy Fix */
+
+/* Base layer: Map containers */
+.leaflet-container {
+  z-index: 1 !important;
+}
+
+/* Map tiles and basic content */
+.leaflet-tile-pane {
+  z-index: 2 !important;
+}
+
+/* Map markers and popups */
+.leaflet-marker-pane {
+  z-index: 5 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 15 !important;
+}
+
+/* Map controls (zoom, attribution) */
+.leaflet-control-container {
+  z-index: 20 !important;
+}
+
+/* Custom map overlays (legend, bus list) */
+.map-overlay {
+  z-index: 30 !important;
+  pointer-events: auto !important;
+}
+
+/* Header and navigation */
+.app-header {
+  z-index: 50 !important;
+}
+
+/* Dropdown menus and tooltips */
+.dropdown-menu {
+  z-index: 60 !important;
+}
+
+/* Bottom sheets and modals */
+.bottom-sheet {
+  z-index: 70 !important;
+}
+
+/* Search results and autocomplete */
+.search-dropdown {
+  z-index: 80 !important;
+}
+
+/* Full screen modals */
+.modal-overlay {
+  z-index: 90 !important;
+}
+
+/* Emergency/critical notifications */
+.notification-overlay {
+  z-index: 100 !important;
+}
+
+/* Prevent map interference with UI elements */
+.leaflet-container a,
+.leaflet-container button {
+  pointer-events: auto !important;
+}
+
+/* Ensure map overlays don't block map interaction where they shouldn't */
+.map-overlay-transparent {
+  pointer-events: none !important;
+}
+
+.map-overlay-transparent > * {
+  pointer-events: auto !important;
+}
+
+/* Fix for bottom navigation not being blocked by map */
+.bottom-navigation {
+  z-index: 55 !important;
+  position: relative !important;
+}
+
+/* Ensure search bar stays above map */
+.global-search {
+  z-index: 45 !important;
+  position: relative !important;
+}
+
+/* Collapsible panels */
+.collapsible-panel {
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.collapsible-panel.collapsed {
+  max-height: 60px !important;
+}
+
+.collapsible-panel.expanded {
+  max-height: 300px !important;
+}
+
+/* Map marker clustering */
+.marker-cluster {
+  z-index: 10 !important;
+}
+
+/* Loading overlays */
+.loading-overlay {
+  z-index: 95 !important;
+}
+
+/* Toast notifications */
+.toast-notification {
+  z-index: 85 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* On mobile, reduce overlay sizes to prevent blocking */
+  .map-overlay {
+    max-height: 40vh !important;
+  }
+  
+  .bottom-sheet {
+    max-height: 60vh !important;
+  }
+}
+
+/* Animation fixes */
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Map interaction improvements */
+.leaflet-container {
+  touch-action: pan-x pan-y !important;
+}
+
+/* Prevent text selection on map controls */
+.leaflet-control-container * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Custom scrollbar for overlays */
+.map-overlay::-webkit-scrollbar {
+  width: 6px;
+}
+
+.map-overlay::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.map-overlay::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.map-overlay::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
